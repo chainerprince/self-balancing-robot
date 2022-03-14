@@ -1,29 +1,29 @@
-/*Arduino Self Balancing Robot
+
 #include "I2Cdev.h"
 #include <PID_v1.h> //From 
 #include "MPU6050_6Axis_MotionApps20.h" 
 MPU6050 mpu;
-// MPU control/status vars
-bool dmpReady = false;  // set true if DMP init was successful
-uint8_t mpuIntStatus;   // holds actual interrupt status byte from MPU
-uint8_t devStatus;      // return status after each device operation (0 = success, !0 = error)
-uint16_t packetSize;    // expected DMP packet size (default is 42 bytes)
-uint16_t fifoCount;     // count of all bytes currently in FIFO
-uint8_t fifoBuffer[64]; // FIFO storage buffer
-// orientation/motion vars
+
+bool dmpReady = false;  
+uint8_t mpuIntStatus;   
+uint8_t devStatus;      
+uint16_t packetSize;    
+uint16_t fifoCount;     
+uint8_t fifoBuffer[64]; 
+
 Quaternion q;           // [w, x, y, z]         quaternion container
 VectorFloat gravity;    // [x, y, z]            gravity vector
 float ypr[3];           // [yaw, pitch, roll]   yaw/pitch/roll container and gravity vector
 /*********Tune these 4 values for your BOT*********/
-double setpoint= 176; //set the value when the bot is perpendicular to ground using serial monitor. 
-//Read the project documentation on circuitdigest.com to learn how to set these values
+double setpoint= 176; 
+
 double Kp = 21; //Set this first
 double Kd = 0.8; //Set this secound
 double Ki = 140; //Finally set this 
 /******End of values setting*********/
 double input, output;
 PID pid(&input, &output, &setpoint, Kp, Ki, Kd, DIRECT);
-volatile bool mpuInterrupt = false;     // indicates whether MPU interrupt pin has gone high
+volatile bool mpuInterrupt = false;   
 void dmpDataReady()
 {
     mpuInterrupt = true;
@@ -39,7 +39,7 @@ void setup() {
     // load and configure the DMP
     devStatus = mpu.dmpInitialize();
     
-    // supply your own gyro offsets here, scaled for min sensitivity
+    
     mpu.setXGyroOffset(220);
     mpu.setYGyroOffset(76);
     mpu.setZGyroOffset(-85);
